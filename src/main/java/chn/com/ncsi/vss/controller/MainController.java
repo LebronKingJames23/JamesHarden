@@ -50,7 +50,6 @@ public  String  upload(HttpServletRequest request,HttpServletResponse response,M
 	        }  
 		String fileName = file.getOriginalFilename().toString();
 		List<String[]> list = new ArrayList<String[]>();
-		// 鍑嗗瑕佽鍙栫殑鏂囦欢娴�
 		InputStream is = file.getInputStream();// 瑙ｆ瀽鐨勬槸涓婁紶鐨剎lsx鏂囦欢
 		
 		// 鍒涘缓璇诲彇瀵硅薄
