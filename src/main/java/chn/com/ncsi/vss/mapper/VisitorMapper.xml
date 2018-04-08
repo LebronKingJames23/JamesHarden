@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chn.com.ncsi.vss.mapper.VisitorMapper">
+<insert id="addVisitorMsg" parameterType="chn.com.ncsi.vss.pojo.Visitor">
+	insert into tab_visitor(SIGN_IN_DATE,V_PASS,PURPOSE_CODE,STATUS,
+	<if test="VISITOR_COMPANY!=null and VISITOR_COMPANY!=''">
+	VISITOR_COMPANY,
+	</if>NAME,GENDER,MOBILE,STAFF_NAME,CREATED_ID,CREATED_DATE)
+	values('${SIGN_IN_DATE}','${V_PASS}','${PURPOSE_CODE}','${STATUS}',
+	<if test="VISITOR_COMPANY!=null and VISITOR_COMPANY!=''">
+	'${VISITOR_COMPANY}',
+	</if>
+	'${NAME}','${GENDER}','${MOBILE}','${STAFF_NAME}','${CREATED_ID}','${CREATED_DATE}')
+</insert>
+<select id="findVisitorMsg" parameterType="chn.com.ncsi.vss.pojo.Visitor" resultType="chn.com.ncsi.vss.pojo.Visitor">
+	select SN,SIGN_IN_DATE,V_PASS,PURPOSE_CODE,VISITOR_COMPANY,NAME,GENDER,MOBILE,STAFF_NAME,JOB_POSITION from tab_visitor  where V_PASS='${V_PASS}' and STATUS='${STATUS}'
+</select>
+<update id="checkOut" parameterType="chn.com.ncsi.vss.pojo.Visitor">
+	update tab_visitor set STATUS='O',SIGN_OFF_DATE='${SIGN_OFF_DATE}' where V_PASS='${V_PASS}'
+</update>
+<select id="findAllInterviewrs" resultType="chn.com.ncsi.vss.pojo.Visitor">
+select NAME from tab_visitor where STATUS='P'
+</select >
+<select id="findInterviewrMsg" parameterType="chn.com.ncsi.vss.pojo.Visitor" resultType="chn.com.ncsi.vss.pojo.Visitor">
+select NAME,MOBILE,JOB_POSITION,STAFF_NAME from tab_visitor where NAME="${NAME}" and STATUS="${STATUS}"
+</select>
+<update id="updateInterviewer" parameterType="chn.com.ncsi.vss.pojo.Visitor">
+update tab_visitor set STATUS="I",V_PASS="${V_PASS}",GENDER="${GENDER}",PURPOSE_CODE="${PURPOSE_CODE}",SIGN_IN_DATE="${SIGN_IN_DATE}" where NAME="${NAME}" and STATUS="P" 
+</update>
+<select id="findVisitorByTel" parameterType="chn.com.ncsi.vss.pojo.Visitor" resultType="chn.com.ncsi.vss.pojo.Visitor">
+select  NAME,MOBILE,JOB_POSITION,STAFF_NAME from tab_visitor where STATUS='P' and MOBILE="${MOBILE}"
+</select >
+<insert id="addInterviewr" parameterType="chn.com.ncsi.vss.pojo.Visitor">
+	insert into tab_visitor(STATUS,
+	NAME,MOBILE,PURPOSE_CODE,JOB_POSITION,STAFF_NAME,CREATED_ID,CREATED_DATE)
+	values('${STATUS}','${NAME}','${MOBILE}','${PURPOSE_CODE}','${JOB_POSITION}','${STAFF_NAME}','${CREATED_ID}','${CREATED_DATE}')
+</insert>
+<select id="findUserByUsername" parameterType="chn.com.ncsi.vss.pojo.Visitor" resultType="chn.com.ncsi.vss.pojo.Visitor">
+select * from tab_visitor where NAME='${NAME}'
+</select>
+<select id="queryAllVisitors" resultType="chn.com.ncsi.vss.pojo.Visitor">
+	select * from tab_visitor
+</select>
+</mapper>

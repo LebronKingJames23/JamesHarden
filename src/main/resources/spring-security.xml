@@ -1,0 +1,28 @@
+<b:beans xmlns="http://www.springframework.org/schema/security"
+		 xmlns:b="http://www.springframework.org/schema/beans"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xmlns:p="http://www.springframework.org/schema/p"
+		 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+<http pattern="/tologinPage" security="none"></http>
+<http>
+	<intercept-url pattern="/**" access="hasRole('USER')" />
+	<!-- disabling csrf protection -->
+	<csrf disabled="true"/>
+<form-login  
+       login-page="/tologinPage" authentication-failure-url="/tologinPage?error"  
+       default-target-url="/welcome"  always-use-default-target="true"
+    /> 
+ 
+
+<logout />
+</http>
+
+<b:bean id="AccessControl" class="chn.com.ncsi.vss.service.impl.UserAccessService"/>	
+<authentication-manager>
+	<authentication-provider user-service-ref="AccessControl">
+	</authentication-provider>
+</authentication-manager>
+
+</b:beans>
